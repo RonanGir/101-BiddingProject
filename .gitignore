@@ -30,7 +30,7 @@ local.properties
 .project
 
 # Project management document
-.ods
+*.ods
 
 # External tool builders
 .externalToolBuilders/

@@ -1,4 +1,4 @@
-<%@page import="fr.eni.BiddingProject.bo.SoldArticle"%>
+<%@page import="fr.training.BiddingProject.bo.SoldArticle"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <%@page import="java.text.SimpleDateFormat"%>

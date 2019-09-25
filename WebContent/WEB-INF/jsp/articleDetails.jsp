@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="fr.eni.BiddingProject.bo.SoldArticle"%>
-<%@page import="fr.eni.BiddingProject.bo.User"%>
+<%@page import="fr.training.BiddingProject.bo.SoldArticle"%>
+<%@page import="fr.training.BiddingProject.bo.User"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

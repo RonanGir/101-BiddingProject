@@ -1,7 +1,7 @@
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
-<%@page import="fr.eni.BiddingProject.bo.User"%>
-<%@page import="fr.eni.BiddingProject.bo.Category"%>
-<%@page import="fr.eni.BiddingProject.bo.Regex"%>
+<%@page import="fr.training.BiddingProject.bo.User"%>
+<%@page import="fr.training.BiddingProject.bo.Category"%>
+<%@page import="fr.training.BiddingProject.bo.Regex"%>
 <%@page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 

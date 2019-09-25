@@ -1,4 +1,4 @@
-<%@page import="fr.eni.BiddingProject.bo.User"%>
+<%@page import="fr.training.BiddingProject.bo.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <nav class="navbar navbar-expand-sm bg-orange navbar-light navbar-lewagon">
