@@ -417,9 +417,48 @@ public class BidDAOJdbcImpl implements BidDAO {
 	}
 
 	@Override
-	public List<SoldArticle> filterArticleByAchats(String rqt) throws AppException {
+	public List<SoldArticle> filterArticleByAchats(String input, int noCategory, String openBids, int noUser, String winBids) throws AppException {
+		
 		List<SoldArticle> listArticle = new ArrayList<>();
-
+		AppException ae              = new AppException();
+		
+		// Création d'une requête qui sera complétée en fonction des critères de recherches
+		String rqt = "select DISTINCT soldState, sa.noArticle, sa.articleName, sa.description, sa.bidStartPrice, sa.bidStartedDate, sa.bidEndDate, sa.soldPrice, sa.noCategory, sa.noUser, sa.noRetirement, u.noUser, u.surname, u.firstname, u.lastname, u.phone, u.email, u.credit, u.street, u.zipCode, u.city, c.noCategory, c.name, ret.noRetirement as noRet , ret.street as streetRet, ret.zipCode as zipRet, ret.city as cityRet"
+				+ " from sold_article sa " + "inner join users u on sa.noUser = u.noUser "
+				+ "inner join category c on sa.noCategory = c.noCategory "
+				+ "inner join retirement ret on sa.noRetirement = ret.noRetirement "
+				+ "left outer join bid b on b.noArticle = sa.noArticle "
+				+ "where ";
+		
+		if (!ae.hasErreurs()) {
+			// Si champs de recherche rempli, on construit la requête avec le champs de recherche
+			if (!input.equals("")) {
+				rqt += "sa.articleName LIKE '%" + input + "%' ";
+				// Sinon on fait une recherche pour tout article name non null (donc tous), permet d'avoir quelque chose après le where
+			} else {
+				rqt += "sa.articleName IS NOT NULL ";
+			}
+			
+			// Si catégorie seléctionnée on ajoute le numéro de catégorie
+			if (noCategory != 0) rqt += "AND sa.noCategory =" + noCategory + " ";
+			
+			// Si numéro d'user différent de 0 donc user qui exsite et winBids sur on
+			if (noUser != 0 && !winBids.equals("")) {
+				rqt += "AND b.noUser =" + noUser + "and sa.soldState = 1 and sa.bidEndDate < CURRENT_TIMESTAMP ";
+			} else {
+				rqt += "AND bidStartedDate <= CURRENT_TIMESTAMP and bidEndDate >= CURRENT_TIMESTAMP ";
+			}
+			
+			// Si numéro d'user différent de 0 donc user qui exsite et winBids non coché
+			if (noUser != 0 && winBids.equals("")) rqt += "AND b.noUser =" + noUser + " ";
+			
+			// On ajoute l'ordre d'affichage
+			rqt += "ORDER BY bidEndDate ASC;";
+			// On envoie la requête à la DAL
+		} else {
+			throw ae;
+		}
+			
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(rqt);
 			ResultSet rs = pstmt.executeQuery();
@@ -449,17 +488,58 @@ public class BidDAOJdbcImpl implements BidDAO {
 
 		} catch (Exception e) {
 			// Si une exception est levée, on l'ajoute à la liste d'erreurs d'AppException
-			e.printStackTrace();
-			AppException ae = new AppException();
 			ae.ajouterErreur(CodesResultatDAL.FILTER_BY_SEARCH);
 		}
 
 		return listArticle;
 	}
+	
+	
 
 	@Override
-	public List<SoldArticle> filterArticleBySales(String rqt) throws AppException {
+	public List<SoldArticle> filterArticleBySales(String input, int noCategory, int noUser, String pending, String end) throws AppException {
+		
 		List<SoldArticle> listArticle = new ArrayList<>();
+		AppException ae               = new AppException();
+		
+		// Création d'une requête qui sera complétée en fonction des critères de recherches
+		String rqt = "select DISTINCT soldState, sa.noArticle, sa.articleName, sa.description, sa.bidStartPrice, sa.bidStartedDate, sa.bidEndDate, sa.soldPrice, sa.noCategory, sa.noUser, sa.noRetirement, u.noUser, u.surname, u.firstname, u.lastname, u.phone, u.email, u.credit, u.street, u.zipCode, u.city, c.noCategory, c.name, ret.noRetirement as noRet , ret.street as streetRet, ret.zipCode as zipRet, ret.city as cityRet"
+				+ " from sold_article sa " + "inner join users u on sa.noUser = u.noUser "
+				+ "inner join category c on sa.noCategory = c.noCategory "
+				+ "inner join retirement ret on sa.noRetirement = ret.noRetirement " + "where ";
+		
+		if (!ae.hasErreurs()) {
+			// Si champs de recherche rempli, on construit la requête avec le champs de recherche
+			if (!input.equals("")) {
+				rqt += "sa.articleName LIKE '%" + input + "%' ";
+				// Sinon on fait une recherche pour tout article name non null (donc tous), permet d'avoir quelque chose après le where
+			} else {
+				rqt += "sa.articleName IS NOT NULL ";
+			}
+			// Si catégorie seléctionnée on ajoute le numéro de catégorie
+			if (noCategory != 0) {
+				rqt += "AND sa.noCategory =" + noCategory + " ";
+			} 
+			// Si numéro user différent de 0, donc utilisateur reconnu
+			if (noUser != 0) {
+				rqt += "AND sa.noUser =" + noUser + " ";
+				// Sinon recherche pour tous les user
+			} else {
+				rqt += "AND sa.noUser IS NOT NULL ";
+			}
+			// Si ventes non débutées cochée, date début enchère supérieure ou égale à date actuelle
+			if (!pending.equals("")) {
+				rqt += "AND bidStartedDate >= CURRENT_TIMESTAMP ";
+			}
+			// Si ventes terminées cochée, date fin enchère inférieure à date actuelle
+			if (!end.equals("")) {
+				rqt += "AND bidEndDate <= CURRENT_TIMESTAMP ";
+			}
+			// Ajout de l'odre d'affichage
+			rqt += "ORDER BY bidEndDate ASC;";
+		} else {
+			throw ae;
+		}
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(rqt);
@@ -490,7 +570,6 @@ public class BidDAOJdbcImpl implements BidDAO {
 		} catch (Exception e) {
 			// Si une exception est levée, on l'ajoute à la liste d'erreurs d'AppException
 			e.printStackTrace();
-			AppException ae = new AppException();
 			ae.ajouterErreur(CodesResultatDAL.FILTER_BY_SEARCH);
 		}
 		return listArticle;

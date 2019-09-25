@@ -67,12 +67,12 @@ public interface BidDAO {
 	/**
 	 * @author blegoubi2019
 	 */
-	public List<SoldArticle> filterArticleByAchats(String rqt) throws AppException;
+	public List<SoldArticle> filterArticleByAchats(String input, int noCategory, String openBids, int noUser, String winBids) throws AppException;
 
 	/**
 	 * @author blegoubi2019
 	 */
-	public List<SoldArticle> filterArticleBySales(String rqt) throws AppException;
+	public List<SoldArticle> filterArticleBySales(String input, int noCategory, int noUser, String pending, String end) throws AppException;
 
 	/**
 	 * @author rgirault2019 the method select an article by his id into database
