@@ -28,6 +28,8 @@ public class BidManagerBase implements BidManager {
             try {
                 cnx.setAutoCommit(false);
                 
+                
+                // Go get all opened bids in the database
                 try {
                     allbidsStarted = DAOFactory.getBidDAO().selectAllBidsStarted(cnx);
                     
@@ -35,15 +37,11 @@ public class BidManagerBase implements BidManager {
                     e1.printStackTrace();
                 }
                 
+             // Go get all recent sold article in the database
                 try {
                     
                     allSoldArticle = DAOFactory.getBidDAO().selectAllSoldBids(cnx);
-                  
-                    for (SoldArticle soldArticle : allSoldArticle) {
-						
-                    	System.out.println(soldArticle.getArticleName() + " est-il archivé = " + soldArticle.isArchive());
-					}
-                    
+       
                     if (allSoldArticle != null) {
                         
                         int max    = 0;
@@ -53,28 +51,35 @@ public class BidManagerBase implements BidManager {
                         for (SoldArticle sa : allSoldArticle) {
                             
                             for (Bid b : sa.getListBidArticle()) {
+                            	
                                 if (b.getBidAmount() > max) {
                                 	max    = b.getBidAmount();
                                 }
+                                
                                 noUser = sa.getNoUser();
                             }
-                   
+                            
+                            // set sold articles status archive to true  
                             sa.setArchive(true);
-                         
+                            
+                            // update them in the database 
                             DAOFactory.getBidDAO().updateArticleArchive(sa.getNoArticle(),sa.isArchive(),cnx);
                             											
   
                         }
                         
+                        // credit the seller of the best bid amount of the recent sold article : 
                         
+                        // get the sold article's seller
                         if(noUser > 0) seller =  ManagerFactory.getUserManager().getUserById(noUser, cnx);
+                        
                         if (seller != null && max > 0) {
                     
                         	seller.setCredit(seller.getCredit() + max);
                         	credit = seller.getCredit();
                     
                         }
-                        
+                        // update his credit amount in the database
                         if (credit > 0) ManagerFactory.getUserManager().updateUserCredit(seller.getNoUser(), credit, cnx);
                 }
                     
@@ -94,6 +99,8 @@ public class BidManagerBase implements BidManager {
         }
         return allbidsStarted;
     }
+    
+    
 
 	@Override
 	public void createArticle(String articleName, String description, Date bidStartedDate, Date bidEndDate,
@@ -140,12 +147,19 @@ public class BidManagerBase implements BidManager {
 		}
 
 	}
-
+	
+	
+	/**
+	 * return all categories present in the database
+	 */
 	@Override
 	public List<Category> getAllCategory() throws AppException {
 
 		return DAOFactory.getBidDAO().selectAllCategory();
+
 	}
+	
+	
 
 	@Override
 	public List<SoldArticle> getListArticleByCategory(String input, int noCategory) throws AppException {
@@ -217,6 +231,8 @@ public class BidManagerBase implements BidManager {
 
 		return listArticle;
 	}
+	
+	
 
 	@Override
 	public List<SoldArticle> getListArticleBySales(String input, int noCategory, int noUser, String pending,
@@ -266,24 +282,42 @@ public class BidManagerBase implements BidManager {
 
 		return listArticle;
 	}
+	
+	
 
+	/**
+	 * @author rgirault2019
+	 */
 	@Override
 	public List<SoldArticle> getListArticleByWonBids(int noUser) throws AppException {
 		List<SoldArticle> listArticle = new ArrayList<>();
 		
+		listArticle = DAOFactory.getBidDAO().filterArticleByWonBids(noUser);
+		
 		return listArticle;
 	}
-
+	
+	
+	
+	
+	/**
+	 * @author rgirault2019
+	 */
+	
 	@Override
 	public SoldArticle getArticleById(int noArticle) throws AppException {
 		SoldArticle selectedArticle = null;
 
-		if (noArticle != 0)
-			selectedArticle = DAOFactory.getBidDAO().selectArticleById(noArticle);
+		if (noArticle != 0) selectedArticle = DAOFactory.getBidDAO().selectArticleById(noArticle);
 
 		return selectedArticle;
 	}
-
+	
+	
+	/**
+	 * @author rgirault2019
+	 */
+	
 	@Override
 	public void createNewBid(int amount, int noArticle, User bider, User oldUserBestBider, int oldBestBid,
 			int bestBidAmount, int bidStartPrice) throws AppException {
@@ -314,14 +348,13 @@ public class BidManagerBase implements BidManager {
 						bider.setCredit(bider.getCredit() - amount);
 						// call the Manager to update the new credit amout in the database for the
 						// current bider and the oldUserBestBider one
-						ManagerFactory.getUserManager().updateUserCredit(oldUserBestBider.getNoUser(),
-								oldUserBestBider.getCredit(), cnx);
+						ManagerFactory.getUserManager().updateUserCredit(oldUserBestBider.getNoUser(),oldUserBestBider.getCredit(), cnx);
+						
 						ManagerFactory.getUserManager().updateUserCredit(bider.getNoUser(), bider.getCredit(), cnx);
 					}
 	
 					
 					if (bider != null && amount > 0 && noArticle > 0) 
-						//TODO : créer une connection et l'envoyer à la DAL
 						DAOFactory.getBidDAO().addNewBid(amount, noArticle, bider, cnx);
 					
 					cnx.commit();
@@ -340,6 +373,10 @@ public class BidManagerBase implements BidManager {
 			}
 	}
 	
+	
+	/**
+	 * @author rgirault2019
+	 */
 	@Override
 	public void updateArticle(int noArticle, int seller, String articleName, String description, Date bidStartedDate, Date bidEndDate, 
 			int bidStartPrice, int noCategory, int noRet, String retStreet, String retZipCode, String retCity) {
