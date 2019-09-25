@@ -1,0 +1,43 @@
+/* MANAGE POSITION */
+
+#Capa_1 {
+  	height: 30px;
+    position: absolute;
+    top: 5px;
+
+}
+
+#Capa_1:hover {
+  animation-name: moveTheHammer;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function:linear;
+
+}
+
+
+#Capa_2 {
+    height: 8px;
+    position: absolute;
+    top: 41px;
+    left: 30px;
+
+}
+
+
+/* ANIME THE IMAGE */
+
+@keyframes moveTheHammer {
+    0% {
+      transform: rotate(32deg);
+      top: 16px;
+
+    }
+
+    100% {
+      transform: rotate(32deg);
+      top: 16px;
+
+    }
+}

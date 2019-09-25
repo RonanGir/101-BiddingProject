@@ -1,0 +1,23 @@
+.btn-darkOrange {
+    color: #fff;
+    background-color: hsl(339,100%,14%); !important;
+    border-color: #450018;
+    transition: all ease 0.5s;
+}
+
+.btn-darkOrange:hover {
+	color: #fff !important;
+	background-color: hsl(339,100%,7%);!important;
+}
+
+.btn-orange {
+    color: #fff;
+    background-color: hsl(15,99%,45%); !important;
+    border-color: hsl(15,99%,45%);
+    transition: all ease 0.5s;
+}
+
+.btn-orange:hover {
+	color: #fff !important;
+	background-color: hsl(15,99%,40%);!important;
+}

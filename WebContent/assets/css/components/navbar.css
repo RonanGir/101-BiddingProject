@@ -1,0 +1,52 @@
+
+
+.bg-orange {
+	background-color: #E33801 !important;
+	color: rgb(250,250,250);
+}
+
+.navbar .nav-link {
+	color: rgb(235,235,235) !important;
+}
+
+
+.navbar .nav-link:hover {
+	color: rgb(250,250,250) !important;
+} 
+
+.navbar-lewagon {
+  justify-content: space-between;
+  background: white;
+}
+
+.navbar-lewagon .navbar-collapse {
+  flex-grow: 0;
+}
+
+.dropdown .nav-link {
+	color: rgb(30,30,30) !important;
+	transition: all ease 0.5s;
+}
+
+.dropdown .nav-link:hover {
+	background-color: #FF6A2C !important;
+	color: rgb(235,235,235) !important;
+}
+
+.navbar-lewagon img {
+  width: 40px;
+  transsition: all ease 0.5s;
+}
+.navbar-lewagon img:hover {
+  width: 41px;
+}
+
+.creditUserProfil {
+   position: relative;
+   right: 14px;
+   top: -16px;
+}
+
+
+  
+

@@ -1,0 +1,24 @@
+.searchContainer {
+	margin: 30px 0;
+}
+
+.achatsBlock, .salesBlock {
+	display: inline-block;
+	background-color: rgb(235,235,235);
+	margin: 15px 15px 15px 0;
+	padding: 15px 0;
+	border-radius: 5px;
+	color: rgb(30,30,30);
+	ppacity: 0.8;
+}
+
+.AdvancedFilters input[type="checkbox"] {
+	background-color: white;
+}
+
+.blockColor {
+	background-color: rgb(150,150,150);
+	color: rgb(255,255,255);
+	opacity: 1;
+}
+	

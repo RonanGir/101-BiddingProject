@@ -1,0 +1,61 @@
+/* All components style */
+@import "components/navbar.css";
+@import "components/button.css";
+@import "components/card.css";
+@import "components/search.css";
+@import "components/form.css";
+@import "components/badge.css";
+@import "components/avatar.css";
+@import "components/alert.css";
+@import "components/logo.css";
+
+/* All layout style */
+@import "layout/footer.css";
+
+/* All pages style */
+@import "pages/profile.css";
+@import "pages/detailsArticle.css";
+
+
+/* All general style */
+body {
+	color : rgb(150,150,150);
+	background-color: rgb(250,250,250);
+}
+
+.red {
+	color: #450018;
+	font-size: 10px !important;
+}
+
+.minHeightOneHundred {
+	min-height: calc(100vh - 120px);
+}
+
+.minMarginTop {
+	margin-top:30px
+}
+
+
+/* COLOR PALETTE
+	lighter-orange: #FFD2B5;
+	light-orange:   #FF6A2C;
+	orange:
+		#E33801;
+		rgb(227,56,1);
+	hsl(15,99%,45%);
+	dark-orange:
+		#C31702;
+		rgb(195,23,2);
+		hsl(7,98%,39%);
+	darker-orange:  
+		 #450018;
+		rgb(69,0,24);
+		hsl(339,100%,14%);
+	*/
+
+/* FONT PALETTE
+	lighter: rgb(235,235,235);
+	normal:  rgb(150,150,150);
+	darker:  rgb(30,30,30);
+*/

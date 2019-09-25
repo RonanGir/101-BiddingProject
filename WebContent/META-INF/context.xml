@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource
+		name="jdbc/pool_bid"
+		
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		type="javax.sql.DataSource"
+		
+		url="jdbc:sqlserver://10.104.200.6;databasename=BID"
+		username="bid_admin"
+		password="t4wV7H5jM"
+		
+		maxTotal="100"
+		maxIdle="30"
+		maxWaitMillis="10000"
+	/>
+	
+		<Resource
+		name="jdbc/pool_bid_sqlite"
+		
+		driverClassName="org.sqlite.JDBC"
+		type="javax.sql.DataSource"
+		
+		url="jdbc:sqlite:/Users/giraultronan/code/bdd/bddBidProject.db"
+		
+		
+		maxTotal="100"
+		maxIdle="30"
+		maxWaitMillis="10000"
+	/>
+
+</Context>

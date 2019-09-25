@@ -1,0 +1,9 @@
+.formContainer {
+	padding: 20px;
+	
+}
+
+.formBodyContainer {
+	height: calc(100vh - 120px);
+	margin-top: 50px;
+}
