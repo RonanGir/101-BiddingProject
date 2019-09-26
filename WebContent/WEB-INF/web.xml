@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-  <display-name>101-BiddingProject</display-name>
-  <welcome-file-list>
-    <welcome-file>index</welcome-file>
-  </welcome-file-list>
-  <context-param>
-    <description>Points par défaut</description>
-    <param-name>POINTS</param-name>
-    <param-value>100</param-value>
-  </context-param>
-  <session-config>
-    <session-timeout>5</session-timeout>
-  </session-config>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	
+	<display-name>101-BiddingProject</display-name>
+	
+	<welcome-file-list>
+		<welcome-file>index</welcome-file>
+	</welcome-file-list>
+	
+	<context-param>
+		<description>Points par défaut</description>
+		<param-name>POINTS</param-name>
+		<param-value>100</param-value>
+	</context-param>
+	
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
+	
+<!-- 	<resource-ref> -->
+<!--     	<res-ref-name>jdbc/sqlite</res-ref-name> -->
+<!--     	<res-type>javax.sql.DataSource</res-type> -->
+<!-- 	</resource-ref> -->
+	
+
 </web-app>

@@ -97,6 +97,10 @@ public class BidManagerBase implements BidManager {
         } catch (Exception e) {
             
         }
+        for (SoldArticle sa : allbidsStarted) {
+        	System.out.print("> ");
+			System.out.println(sa.getArticleName());
+		}
         return allbidsStarted;
     }
     

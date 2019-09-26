@@ -18,9 +18,10 @@ import fr.training.BiddingProject.bo.User;
 public class BidDAOJdbcImpl implements BidDAO {
 
 	private final String SELECT_ALL_BID_STARTED = "select soldState, sa.noArticle, sa.articleName, sa.description, sa.bidStartPrice, sa.bidStartedDate, sa.bidEndDate, sa.soldPrice, sa.noCategory, sa.noUser, sa.noRetirement, u.noUser, u.surname, u.firstname, u.lastname, u.phone, u.email, u.credit, u.street, u.zipCode, u.city, ret.noRetirement as noRet , ret.street as streetRet, ret.zipCode as zipRet, ret.city as cityRet"
-			+ " from sold_article sa " + "inner join users u on sa.noUser = u.noUser "
+			+ " from sold_article sa " 
+			+ "inner join users u on sa.noUser = u.noUser "
 			+ "inner join retirement ret on sa.noRetirement = ret.noRetirement "
-			+ "where bidStartedDate <= CURRENT_TIMESTAMP and bidEndDate >= CURRENT_TIMESTAMP "
+			+ "where bidStartedDate <= current_timestamp and bidEndDate >= current_timestamp "
 			+ "ORDER BY sa.bidEndDate ASC;";
 
 	private final String SELECT_ALL_SOLD_ARTICLE = "select archive, soldState, sa.noArticle, sa.articleName, sa.description, sa.bidStartPrice, sa.bidStartedDate, sa.bidEndDate, sa.soldPrice, sa.noCategory, sa.noUser, sa.noRetirement, u.noUser, u.surname, u.firstname, u.lastname, u.phone, u.email, u.credit, u.street, u.zipCode, u.city, ret.noRetirement as noRet , ret.street as streetRet, ret.zipCode as zipRet, ret.city as cityRet, c.noCategory, c.name, b.noBid, b.bidDate, b.bidAmount, b.noArticle as noArticleInBid, b.noUser as bider "
@@ -35,7 +36,7 @@ public class BidDAOJdbcImpl implements BidDAO {
 			+ "left outer join bid b on b.noArticle = sa.noArticle " + "where sa.noArticle = ? "
 			+ "ORDER BY bidEndDate ASC;";
 
-	// Requête pour récupérer les articles dont le nom d'article contien ... et
+	// Requête pour récupérer les articles dont le nom d'article contient ... et
 	// classés par ordre croissant
 	private final String FILTER_ARTICLE_BY_SEARCH = "select soldState, sa.noArticle, sa.articleName, sa.description, sa.bidStartPrice, sa.bidStartedDate, sa.bidEndDate, sa.soldPrice, sa.noCategory, sa.noUser, sa.noRetirement, u.noUser, u.surname, u.firstname, u.lastname, u.phone, u.email, u.credit, u.street, u.zipCode, u.city, ret.noRetirement as noRet , ret.street as streetRet, ret.zipCode as zipRet, ret.city as cityRet"
 			+ " from sold_article sa " + "inner join users u on sa.noUser = u.noUser "

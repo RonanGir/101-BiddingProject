@@ -57,6 +57,42 @@ CREATE TABLE BID (
  );
 
 
+-- To modify data type in sqlite
+PRAGMA foreign_keys=off;
+
+BEGIN TRANSACTION;
+
+ALTER TABLE SOLD_ARTICLE RENAME TO _SOLD_ARTICLE_old;
+
+CREATE TABLE SOLD_ARTICLE (
+    noArticle              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    articleName            VARCHAR(30) NOT NULL,
+    description            VARCHAR(300) NOT NULL,
+    bidStartedDate         datetime NOT NULL,
+    bidEndDate             datetime NOT NULL,
+    bidStartPrice          INTEGER,
+    soldPrice              INTEGER,
+    noUser                 INTEGER NOT NULL,
+    noCategory             INTEGER NOT NULL,
+    noRetirement           INTEGER NULL,
+    FOREIGN KEY (noRetirement) REFERENCES USERS (noRetirement),
+    FOREIGN KEY (noCategory) REFERENCES USERS (noCategory),
+    FOREIGN KEY (noUser) REFERENCES USERS (noUser)
+);
+
+INSERT INTO SOLD_ARTICLE (noArticle, articleName, description, bidStartedDate, bidEndDate, soldPrice, noUser, noCategory, noRetirement, soldState, archive)
+  SELECT noArticle, articleName, description, bidStartedDate, bidEndDate, soldPrice, noUser, noCategory, noRetirement, soldState, archive
+  FROM _SOLD_ARTICLE_old;
+
+COMMIT;
+
+PRAGMA foreign_keys=on;
+
+
+ALTER TABLE SOLD_ARTICLE ADD archive INTEGER NULL;
+ALTER TABLE SOLD_ARTICLE ADD soldState INTEGER NULL;
+
+
 -- ALTER TABLE CATEGORY ADD constraint categorie_pk PRIMARY KEY (noCategory)
 
 -- ALTER TABLE RETIREMENT ADD constraint retrait_pk PRIMARY KEY  (noRetirement)

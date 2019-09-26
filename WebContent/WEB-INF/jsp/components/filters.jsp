@@ -6,10 +6,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%	
-	int cat = (int) request.getAttribute("Cat");
-	String input = (String) request.getAttribute("Search");
+	int cat                = (int) request.getAttribute("Cat");
+	String input           = (String) request.getAttribute("Search");
 	List<Category> listCat = (List) application.getAttribute("Category");
-	User currentUser = (User) session.getAttribute("currentUser");
+	User currentUser       = (User) session.getAttribute("currentUser");
 %>
 
 <div class="row">

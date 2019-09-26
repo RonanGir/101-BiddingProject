@@ -21,14 +21,14 @@ public class Listener implements ServletContextListener {
      * Default constructor. 
      */
     public Listener() {
-        // TODO Auto-generated constructor stub
+      
     }
 
 	/**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0)  { 
-         // TODO Auto-generated method stub
+      
     }
 
 	/**
@@ -37,9 +37,12 @@ public class Listener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent arg0) { 
     	try {
     		List<Category> ListCategory = ManagerFactory.getBidManager().getAllCategory();
+    		
     		arg0.getServletContext().setAttribute("Category", ListCategory);
+    		
     	} catch (Exception e) {
     		
+    		e.printStackTrace();
     	}	
     }
 	
